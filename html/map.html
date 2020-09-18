@@ -1,0 +1,3137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #dadada;
+        }
+        #login .container {
+            background-color: #ffffff;
+            margin-top: 100px;
+        }
+        #login-row {
+            border:1px dashed #888888;
+            padding: 20px;
+        }
+        .navbar {
+            margin-bottom: 50px;
+        }
+    </style>
+
+    <title>Map</title>
+    </head>
+    <body>
+
+        <div class="container-fluid">
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="assets/js/jquery-2.2.4.min.js"></script>
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script>
+
+            jQuery(document).ready(function() {
+
+                var bWidth = 23;
+                var bHeight = 23;
+                var validCoords = [];
+                var mapCoords = [];
+
+                function drawBox(X,Y,A) {
+                    var allCoords = [];
+
+                    for(var x=0; x<A.length; x++) {
+                        /*var coords = {
+                            t: Y,
+                            l: X,
+                            b: Y + bHeight,
+                            r: X + bWidth,
+                        }
+
+                        allCoords.push(coords);*/
+
+                        allCoords.push([Y,X,Y + bHeight,X + bWidth,0]);
+
+                        //var t = {}
+                        //t[x] = coords;
+                        //console.log(t);
+                        ctx.fillStyle = "rgba(200, 0, 0, 0.9)";
+                        ctx.fillRect(X, Y, bWidth, bHeight);
+                        X = X + bWidth + 3;
+
+                        if(A[x]) {
+                            X = X + A[x];
+                        }
+                    }
+
+                    return allCoords;
+                }
+
+                let c = document.createElement("canvas");
+
+                if (c.getContext) {
+
+                    var ctx = c.getContext('2d');
+
+                    var img1 = new Image();
+
+                    img1.onload = function () {
+
+                        c.width = img1.width;
+                        c.height = img1.height;
+                        ctx.drawImage(img1, 0, 0);
+
+                        var X = 3527;
+                        var Y = 149;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 380;
+                        var Y = 175;
+                        var A = [0,0,0,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373
+                        var Y = 175;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3501
+                        var Y = 175;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 353;
+                        var Y = 201;
+                        var A = [0,0,0,0,0,0,3,0,0,0,0,0,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2348;
+                        var Y = 201;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3475;
+                        var Y = 201;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 353;
+                        var Y = 226;
+                        var A = [0,0,0,0,0,0,3,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2348;
+                        var Y = 226;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3423;
+                        var Y = 226;
+                        var A = [0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 251;
+                        var A = [0,0,0,0,0,0,3,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1795;
+                        var Y = 251;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2348;
+                        var Y = 251;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3423;
+                        var Y = 251;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 277;
+                        var A = [0,0,0,0,0,0,3,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1770;
+                        var Y = 277;
+                        var A = [0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2374;
+                        var Y = 277;
+                        var A = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3082;
+                        var Y = 277;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3397;
+                        var Y = 277;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 301;
+                        var Y = 302;
+                        var A = [0,0,0,0,0,0,0,0,3,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1454;
+                        var Y = 302;
+                        var A = [0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1744;
+                        var Y = 302;
+                        var A = [0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2374;
+                        var Y = 302;
+                        var A = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3056;
+                        var Y = 302;
+                        var A = [0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3397;
+                        var Y = 302;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 248;
+                        var Y = 328;
+                        var A = [0,0,0,0,0,0,0,0,3,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 852;
+                        var Y = 328;
+                        var A = [0,0,0,0,0,0,1,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1716;
+                        var Y = 328;
+                        var A = [0,0,0,1,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 328;
+                        var A = [0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2872;
+                        var Y = 328;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2950;
+                        var Y = 328;
+                        var A = [1,0,0,0,0,0,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3343;
+                        var Y = 328;
+                        var A = [0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3553;
+                        var Y = 328;
+                        var A = [0,0,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 248;
+                        var Y = 353;
+                        var A = [0,0,0,0,0,0,0,0,3,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1087;
+                        var Y = 353;
+                        var A = [1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1691;
+                        var Y = 353;
+                        var A = [0,0,0,0,0,0,0,1,0,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2295;
+                        var Y = 353;
+                        var A = [0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2873;
+                        var Y = 353;
+                        var A = [0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3187;
+                        var Y = 353;
+                        var A = [0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3605;
+                        var Y = 353;
+                        var A = [0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 248;
+                        var Y = 379;
+                        var A = [0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 564;
+                        var Y = 379;
+                        var A = [0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1325;
+                        var Y = 379;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1691;
+                        var Y = 379;
+                        var A = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2111;
+                        var Y = 379;
+                        var A = [0,0,0,0,0,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2740;
+                        var Y = 379;
+                        var A = [0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 379;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3239;
+                        var Y = 379;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3632;
+                        var Y = 379;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 222;
+                        var Y = 405;
+                        var A = [0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 405;
+                        var A = [0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1141;
+                        var Y = 405;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1403;
+                        var Y = 405;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1717;
+                        var Y = 405;
+                        var A = [0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2478;
+                        var Y = 405;
+                        var A = [0,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3082;
+                        var Y = 405;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3291;
+                        var Y = 405;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3448;
+                        var Y = 405;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3632;
+                        var Y = 405;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 197;
+                        var Y = 430;
+                        var A = [0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 512;
+                        var Y = 430;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1455;
+                        var Y = 430;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1717;
+                        var Y = 430;
+                        var A = [0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2452;
+                        var Y = 430;
+                        var A = [0,0,0,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 430;
+                        var A = [0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3396;
+                        var Y = 430;
+                        var A = [0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3658;
+                        var Y = 430;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 197;
+                        var Y = 456;
+                        var A = [0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 512;
+                        var Y = 456;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1481;
+                        var Y = 456;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1717;
+                        var Y = 456;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2084;
+                        var Y = 456;
+                        var A = [0,0,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2426;
+                        var Y = 456;
+                        var A = [0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2820;
+                        var Y = 456;
+                        var A = [0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3370;
+                        var Y = 456;
+                        var A = [0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3658;
+                        var Y = 456;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 222;
+                        var Y = 481;
+                        var A = [0,0,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 481;
+                        var A = [0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1508;
+                        var Y = 481;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 481;
+                        var A = [0,1,0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2767
+                        var Y = 481;
+                        var A = [0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3658;
+                        var Y = 481;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 197;
+                        var Y = 507;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 507;
+                        var A = [0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1560;
+                        var Y = 507;
+                        var A = [0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1875;
+                        var Y = 507;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2005;
+                        var Y = 507;
+                        var A = [0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2268;
+                        var Y = 507;
+                        var A = [0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 507;
+                        var A = [1,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3631;
+                        var Y = 507;
+                        var A = [0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 197;
+                        var Y = 532;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 532;
+                        var A = [0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1560;
+                        var Y = 532;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1821;
+                        var Y = 532;
+                        var A = [0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2005;
+                        var Y = 532;
+                        var A = [0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 532;
+                        var A = [1,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3605;
+                        var Y = 532;
+                        var A = [0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 222;
+                        var Y = 558;
+                        var A = [0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 558;
+                        var A = [0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1769;
+                        var Y = 558;
+                        var A = [0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 558;
+                        var A = [0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 558;
+                        var A = [1,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3605;
+                        var Y = 558;
+                        var A = [0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 274;
+                        var Y = 583;
+                        var A = [0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 583;
+                        var A = [0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1743;
+                        var Y = 583;
+                        var A = [0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 583;
+                        var A = [0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 583;
+                        var A = [1,0,0,0,0,0,1,0,0,53,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,52,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 300;
+                        var Y = 609;
+                        var A = [0,1,27,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 609;
+                        var A = [0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 609;
+                        var A = [0,1,0,0,0,1,105,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 609;
+                        var A = [1,0,0,0,0,0,1,0,131,1,0,0,0,0,0,0,0,1,1,0,0,0,52,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 406;
+                        var Y = 635;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 563;
+                        var Y = 635;
+                        var A = [1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 635;
+                        var A = [0,1,0,0,0,158,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 635;
+                        var A = [1,0,0,0,0,0,1,0,131,1,0,0,0,0,0,0,0,1,1,0,0,0,52,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 660;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 563;
+                        var Y = 660;
+                        var A = [1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,54,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 660;
+                        var A = [0,1,0,0,0,158,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 660;
+                        var A = [1,0,0,0,0,0,1,0,0,132,0,0,0,0,0,0,0,0,1,1,0,0,52,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 686;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 563;
+                        var Y = 686;
+                        var A = [1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,106,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 686;
+                        var A = [0,1,0,0,0,158,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2820;
+                        var Y = 686;
+                        var A = [0,0,0,0,0,0,1,0,0,106,0,0,0,0,0,0,0,0,1,1,0,0,52,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 711;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 537;
+                        var Y = 711;
+                        var A = [0,1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,106,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 711;
+                        var A = [0,1,0,0,0,0,0,54,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2872;
+                        var Y = 711;
+                        var A = [0,0,0,0,0,0,1,0,0,28,0,0,0,0,0,0,0,0,1,1,0,0,0,52,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 737;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 537;
+                        var Y = 737;
+                        var A = [0,1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,79,0,0,0,0,0,0,0,0,0,0,0,159,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1979;
+                        var Y = 737;
+                        var A = [0,1,0,0,0,0,0,0,0,0,0,1,0,0,2,0,1,0,0,1,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2925;
+                        var Y = 737;
+                        var A = [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,53,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 763;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 537;
+                        var Y = 763;
+                        var A = [0,1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,79,0,0,0,0,0,0,0,0,0,0,211,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2005;
+                        var Y = 763;
+                        var A = [0,1,0,0,0,54,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2925;
+                        var Y = 763;
+                        var A = [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        //----
+
+                        var X = 432;
+                        var Y = 788;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 537;
+                        var Y = 788;
+                        var A = [0,1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,79,0,0,0,0,0,0,0,0,0,237,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2031;
+                        var Y = 788;
+                        var A = [0,1,0,106,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2925;
+                        var Y = 788;
+                        var A = [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        //----
+
+                        var X = 406;
+                        var Y = 813;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        var X = 537;
+                        var Y = 813;
+                        var A = [0,1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1,1,0,79,0,0,0,0,0,0,0,0,0,0,0,158,1,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2031;
+                        var Y = 813;
+                        var A = [0,1,0,0,54,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2898;
+                        var Y = 813;
+                        var A = [0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,79,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        //----
+
+                        var X = 380;
+                        var Y = 839;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 839;
+                        var A = [0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,132,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2058;
+                        var Y = 839;
+                        var A = [0,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 839;
+                        var A = [0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,53,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        //----
+
+                        var X = 380;
+                        var Y = 865;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 865;
+                        var A = [0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,158,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2058;
+                        var Y = 865;
+                        var A = [0,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,2,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 865;
+                        var A = [0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        //----
+
+                        var X = 406;
+                        var Y = 891;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 891;
+                        var A = [0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,158,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2058;
+                        var Y = 891;
+                        var A = [0,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2793;
+                        var Y = 891;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 406;
+                        var Y = 916;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 537;
+                        var Y = 916;
+                        var A = [1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,132,0,0,0,0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 916;
+                        var A = [0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 916;
+                        var A = [0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 941;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 537;
+                        var Y = 941;
+                        var A = [1,0,0,0,0,80,0,0,0,0,0,0,0,0,0,0,0,1,1,184,0,0,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 941;
+                        var A = [0,0,1,0,104,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 941;
+                        var A = [0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 967;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 564;
+                        var Y = 967;
+                        var A = [0,0,0,0,80,0,0,0,0,0,0,0,0,0,0,0,1,1,184,0,0,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 967;
+                        var A = [0,0,157,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 967;
+                        var A = [0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,53,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 484;
+                        var Y = 993;
+                        var A = [0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 993;
+                        var A = [0,0,106,0,0,0,0,0,0,0,0,0,0,0,1,1,158,0,0,0,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 993;
+                        var A = [0,0,184,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 993;
+                        var A = [0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,53,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 275;
+                        var Y = 1018;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1018;
+                        var A = [0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 1018;
+                        var A = [0,0,132,0,0,0,0,0,0,0,0,0,0,0,1,1,0,53,0,0,0,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1018;
+                        var A = [0,0,184,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1018;
+                        var A = [0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,53,0,53,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 249;
+                        var Y = 1043;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1043;
+                        var A = [53,0,183,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1043;
+                        var A = [0,0,0,0,106,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1043;
+                        var A = [0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,105,0,53,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 223;
+                        var Y = 1069;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1069;
+                        var A = [0,53,0,0,157,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1069;
+                        var A = [0,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1069;
+                        var A = [0,0,0,0,106,0,0,0,0,0,0,0,0,0,0,159,0,53,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 196;
+                        var Y = 1094;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 458;
+                        var Y = 1094;
+                        var A = [0,0,53,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1094;
+                        var A = [0,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1094;
+                        var A = [0,0,0,158,0,0,0,0,0,0,0,0,0,159,0,53,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 196;
+                        var Y = 1120;
+                        var A = [0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1120;
+                        var A = [0,0,53,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1120;
+                        var A = [0,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1120;
+                        var A = [0,0,237,0,0,0,0,1,0,0,0,131,0,53,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 170;
+                        var Y = 1145;
+                        var A = [0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1145;
+                        var A = [0,0,53,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1145;
+                        var A = [0,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1145;
+                        var A = [289,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,80,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 170;
+                        var Y = 1171;
+                        var A = [0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1171;
+                        var A = [0,0,53,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1171;
+                        var A = [0,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1171;
+                        var A = [341,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,80,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 143;
+                        var Y = 1197;
+                        var A = [0,0,0,0,0,0,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1197;
+                        var A = [0,0,53,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2032;
+                        var Y = 1197;
+                        var A = [0,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1197;
+                        var A = [0,290,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,80,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 170;
+                        var Y = 1223;
+                        var A = [0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1223;
+                        var A = [0,0,53,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1223;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1223;
+                        var A = [0,0,238,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 170;
+                        var Y = 1248;
+                        var A = [0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1248;
+                        var A = [105,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1248;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1248;
+                        var A = [0,1,0,0,0,133,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 170;
+                        var Y = 1274;
+                        var A = [0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1274;
+                        var A = [53,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1274;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1274;
+                        var A = [0,1,0,0,0,0,53,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 274;
+                        var Y = 1300;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1300;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,53,0,0,0,0,0,0,0,1,1,1,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1300;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1300;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 274;
+                        var Y = 1325;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1325;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,79,0,0,0,0,0,0,0,1,1,1,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1325;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1325;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 274;
+                        var Y = 1350;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1350;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,131,0,0,0,0,0,0,1,1,1,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1350;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1350;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,79,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 274;
+                        var Y = 1375;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1375;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,183,0,0,0,0,0,1,1,1,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1375;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1375;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,54,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 274;
+                        var Y = 1400;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1400;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,183,0,0,0,0,0,1,1,1,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1400;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1400;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,80,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 300;
+                        var Y = 1425;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1425;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,209,0,0,0,0,0,1,1,1,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1425;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1425;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,80,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+                        
+                        var X = 274;
+                        var Y = 1450;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1450;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,131,0,0,0,0,0,1,1,1,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1450;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1450;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+                        
+                        var X = 274;
+                        var Y = 1475;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1475;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1475;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1475;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 300;
+                        var Y = 1500;
+                        var A = [0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1500;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,236,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1500;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2819;
+                        var Y = 1500;
+                        var A = [0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327;
+                        var Y = 1525;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 615;
+                        var Y = 1525;
+                        var A = [0,0,1,0,0,132,1,1,0,130,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 1525;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1525;
+                        var A = [1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 1550;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 510;
+                        var Y = 1550;
+                        var A = [290,0,0,0,1,0,0,0,0,131,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3081;
+                        var Y = 1550;
+                        var A = [341,0,0,0,0,0,0,0,28,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+//=======================================================================================================
+
+                        //----
+
+                        var X = 380;
+                        var Y = 1575;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1575;
+                        var A = [0,210,0,0,0,0,0,0,0,0,1,1,0,1,0,80,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2766;
+                        var Y = 1575;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3684;
+                        var Y = 1575;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 406;
+                        var Y = 1600;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        var X = 511;
+                        var Y = 1600;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,185,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1600;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1600;
+                        var A = [1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,236,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 406;
+                        var Y = 1625;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1625;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1625;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1625;
+                        var A = [1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,80,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 380;
+                        var Y = 1651;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1651;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1651;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        var X = 2845;
+                        var Y = 1651;
+                        var A = [1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,80,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 406;
+                        var Y = 1677;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1677;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1677;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1677;
+                        var A = [1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 380;
+                        var Y = 1703;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1703;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1703;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1703;
+                        var A = [1,0,0,0,0,0,1,0,0,1,1,0,0,130,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 1729;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1729;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,53,0,0,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1729;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1729;
+                        var A = [1,0,0,0,0,0,1,0,0,1,209,0,0,0,0,0,0,0,0,0,0,0,54,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 1754;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 1754;
+                        var A = [0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,132,0,0,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        var X = 2373;
+                        var Y = 1754;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1754;
+                        var A = [1,0,0,0,0,0,1,0,0,132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,80,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 1779;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1779;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,132,0,0,0,0,0,0,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1779;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1779;
+                        var A = [1,0,0,0,0,0,1,105,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,80,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327;
+                        var Y = 1805;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 1805;
+                        var A = [0,53,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,157,0,0,0,0,0,0,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1805;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1805;
+                        var A = [1,0,0,0,0,0,1,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,80,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 301;
+                        var Y = 1831;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 458;
+                        var Y = 1831;
+                        var A = [0,1,106,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,184,0,0,0,0,0,0,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1831;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1831;
+                        var A = [1,0,0,0,0,0,80,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,53,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 301;
+                        var Y = 1857;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 458;
+                        var Y = 1857;
+                        var A = [0,1,184,0,0,1,1,0,1,0,0,0,0,0,0,0,105,79,0,0,0,0,0,0,1,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1857;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1857;
+                        var A = [1,0,0,0,0,0,52,80,0,0,0,0,0,0,0,1,0,0,0,0,0,0,80,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 275;
+                        var Y = 1882;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 458;
+                        var Y = 1882;
+                        var A = [0,1,0,0,158,0,1,0,1,0,0,0,0,0,0,0,105,1,79,0,0,0,0,0,0,1,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1882;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1882;
+                        var A = [1,0,0,0,0,0,52,80,0,0,0,0,105,0,0,0,0,0,53,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 275;
+                        var Y = 1907;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1907;
+                        var A = [0,1,0,0,0,1,0,0,79,0,1,0,0,0,0,0,1,0,0,105,0,132,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,26,0,0,0,0,0,0,1,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1907;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1907;
+                        var A = [1,0,0,0,0,0,0,26,394,0,0,53,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327;
+                        var Y = 1933;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1933;
+                        var A = [0,1,0,0,0,1,0,0,105,1,0,0,0,0,0,1,0,105,0,0,132,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,26,0,0,0,0,0,0,1,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1933;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1933;
+                        var A = [1,0,0,0,0,0,0,54,0,0,289,0,0,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327;
+                        var Y = 1958;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1958;
+                        var A = [0,1,0,0,0,1,0,0,105,1,0,0,0,0,0,1,0,79,0,0,0,132,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,26,0,0,0,0,0,0,1,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1958;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1958;
+                        var A = [1,0,0,0,0,0,0,54,0,0,315,0,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 301;
+                        var Y = 1984;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 432;
+                        var Y = 1984;
+                        var A = [0,1,0,0,0,1,0,0,105,1,0,0,0,0,0,1,105,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,26,0,0,0,0,0,0,1,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 1984;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 1984;
+                        var A = [1,53,0,0,0,0,420,0,0,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327;
+                        var Y = 2009;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 458;
+                        var Y = 2009;
+                        var A = [1,0,0,0,1,0,0,105,1,0,0,0,0,0,79,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,52,0,0,0,0,0,0,1,0,1,0,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2009;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2845;
+                        var Y = 2009;
+                        var A = [106,0,0,0,420,0,0,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 2034;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 458;
+                        var Y = 2034;
+                        var A = [1,0,0,0,1,0,0,105,1,0,0,0,0,0,79,0,0,0,0,0,0,28,1,1,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,52,0,0,0,0,0,0,1,0,1,0,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2034;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3003;
+                        var Y = 2034;
+                        var A = [0,0,53,0,315,0,0,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 353;
+                        var Y = 2060;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 485;
+                        var Y = 2060;
+                        var A = [1,0,0,0,1,0,0,79,1,0,0,0,0,0,79,0,105,132,0,0,0,0,0,1,0,0,1,1,0,51,1,1,0,0,0,0,0,0,0,1,52,0,0,0,0,0,0,0,0,1,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2060;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3003;
+                        var Y = 2060;
+                        var A = [0,0,53,0,315,0,0,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 380;
+                        var Y = 2085;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 511;
+                        var Y = 2085;
+                        var A = [1,0,0,0,1,0,0,132,0,0,0,0,210,0,0,0,54,0,1,0,261,1,1,0,0,1,1,0,0,0,0,51,0,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2085;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 2085;
+                        var A = [0,0,0,0,0,0,0,80,0,0,0,0,0,0,0,27,106,0,0,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 380;
+                        var Y = 2111;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 537;
+                        var Y = 2111;
+                        var A = [1,0,0,0,1,0,0,157,0,0,290,0,0,0,0,263,1,0,0,0,1,1,0,0,0,0,0,0,51,0,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2111;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 2111;
+                        var A = [0,0,0,0,0,0,0,54,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 380;
+                        var Y = 2137;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 563;
+                        var Y = 2137;
+                        var A = [1,0,0,0,1,0,0,0,105,0,0,0,53,185,0,0,0,131,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,25,0,0,0,1,0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2137;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 2137;
+                        var A = [0,0,0,0,0,106,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 407;
+                        var Y = 2163;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 589;
+                        var Y = 2163;
+                        var A = [1,0,0,0,1,0,0,0,80,0,0,79,0,1,0,0,1,0,0,0,0,0,0,79,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,25,0,1,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2163;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 2163;
+                        var A = [0,0,0,106,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 407;
+                        var Y = 2189;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 589;
+                        var Y = 2189;
+                        var A = [1,0,0,0,1,0,0,0,80,0,79,0,0,1,0,0,1,0,0,0,0,0,0,53,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,25,0,1,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2189;
+                        var A = [0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2846;
+                        var Y = 2189;
+                        var A = [0,132,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 459;
+                        var Y = 2214;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2214;
+                        var A = [0,0,1,0,0,0,80,0,79,0,0,1,0,0,1,0,0,0,0,0,0,0,53,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,25,1,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2214;
+                        var A = [0,0,1,0,79,0,0,0,0,0,0,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2978;
+                        var Y = 2214;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,80,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 459;
+                        var Y = 2239;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2239;
+                        var A = [0,0,1,0,0,0,80,0,53,0,0,0,1,0,0,1,0,0,0,0,0,0,0,53,1,0,0,0,1,1,0,0,0,0,0,0,0,0,79,0,0,0,0,25,1,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2239;
+                        var A = [0,0,158,0,1,0,0,0,0,133,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2978;
+                        var Y = 2239;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,80,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 459;
+                        var Y = 2264;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2264;
+                        var A = [0,0,1,0,0,0,0,53,80,0,0,0,1,0,0,1,0,0,0,0,0,0,0,53,1,0,0,0,1,1,0,0,0,0,0,0,0,131,0,0,0,25,1,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2264;
+                        var A = [0,0,184,0,1,0,0,0,53,0,0,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2978;
+                        var Y = 2264;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,53,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 513;
+                        var Y = 2289;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2289;
+                        var A = [0,0,1,0,0,0,0,53,54,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,53,1,0,0,0,1,1,0,0,0,0,0,0,183,0,0,53,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2289;
+                        var A = [0,0,0,132,0,0,1,0,0,79,0,0,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2978;
+                        var Y = 2289;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,53,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 513;
+                        var Y = 2316;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2316;
+                        var A = [0,0,1,0,0,0,53,80,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,53,52,0,0,0,1,1,0,0,263,0,52,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2316;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,25,0,0,1,1,1,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2978;
+                        var Y = 2316;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,53,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 513;
+                        var Y = 2341;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2341;
+                        var A = [0,0,1,0,0,0,133,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,53,78,0,0,0,1,1,0,0,263,0,52,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2341;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,52,0,0,1,1,1]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3004;
+                        var Y = 2341;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 485;
+                        var Y = 2367;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2367;
+                        var A = [0,0,1,0,0,0,0,53,27,0,0,0,1,0,0,1,0,0,0,0,0,0,0,185,0,0,0,0,0,1,0,0,210,0,0,52,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2367;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,52,0,0,1,1]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3056;
+                        var Y = 2367;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 511;
+                        var Y = 2392;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2392;
+                        var A = [0,0,1,0,0,0,0,0,0,54,0,0,0,1,158,235,1,0,0,0,0,0,0,0,0,0,133,0,0,0,0,52,0,1,0,0,0,0,0,0,1,0,2,0,0,0,0,1,0,0,1,0,0,0,1,0,52,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3056;
+                        var Y = 2392;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 485;
+                        var Y = 2418;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2418;
+                        var A = [0,0,1,0,0,0,0,0,1,0,1,0,0,0,420,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,27,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2418;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,78,0,0,1,1]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2418;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 485;
+                        var Y = 2444;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2444;
+                        var A = [0,0,1,0,0,0,0,0,1,0,1,0,0,0,53,0,0,0,210,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,53,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2444;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,25,0,0,1,1,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2444;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,53,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 459;
+                        var Y = 2470;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2470;
+                        var A = [0,0,1,0,0,0,0,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0,53,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,1,0,52,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        var X = 2373;
+                        var Y = 2470;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2470;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,79,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 433;
+                        var Y = 2495;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2495;
+                        var A = [0,0,1,0,0,0,26,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,80,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,52,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2495;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2495;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 433;
+                        var Y = 2520;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 616;
+                        var Y = 2520;
+                        var A = [0,0,1,0,0,0,26,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,106,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,52,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2520;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2520;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 458;
+                        var Y = 2546;
+                        var A = [0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2546;
+                        var A = [0,0,0,1,0,0,0,26,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0,53,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,210,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2546;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2546;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 458;
+                        var Y = 2572;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2572;
+                        var A = [0,0,0,158,0,1,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,263,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2572;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2572;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 484;
+                        var Y = 2597;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2597;
+                        var A = [0,0,263,0,1,0,1,0,1,0,1,0,0,1,0,0,182,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,80,0,0,0,0,131,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2597;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2597;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,53,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 432;
+                        var Y = 2622;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 564;
+                        var Y = 2622;
+                        var A = [0,0,79,26,0,0,0,80,1,0,1,0,0,1,0,0,157,0,0,157,0,0,0,0,0,0,0,0,0,0,0,0,1,107,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2622;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,185,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3030;
+                        var Y = 2622;
+                        var A = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1,53,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 380;
+                        var Y = 2648;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 2648;
+                        var A = [0,0,53,0,53,0,0,0,0,80,1,0,1,0,0,103,1,0,0,0,0,0,0,0,0,185,0,0,0,0,0,0,0,133,0,1,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2504;
+                        var Y = 2648;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,51]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3082;
+                        var Y = 2648;
+                        var A = [0,0,0,0,0,235,0,0,80,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327;
+                        var Y = 2673;
+                        var A = [0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 538;
+                        var Y = 2673;
+                        var A = [0,80,0,104,0,0,0,106,131,1,0,1,0,0,1,0,0,0,0,0,0,0,420,0,0,0,0,105,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+                        
+                        var X = 2846;
+                        var Y = 2673;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 3605;
+                        var Y = 2673;
+                        var A = [0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 301;
+                        var Y = 2699;
+                        var A = [0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 642;
+                        var Y = 2699;
+                        var A = [0,0,106,0,0,0,0,158,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,186,0,0,0,0,0,0,159,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2373;
+                        var Y = 2699;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2898;
+                        var Y = 2699;
+                        var A = [0,0,0,0,0,0,185,0,0,0,0,0,132,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 276;
+                        var Y = 2724;
+                        var A = [0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2724;
+                        var A = [0,0,0,0,132,0,0,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,27,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2321;
+                        var Y = 2724;
+                        var A = [0,0,0,0,0,0,1,0,1,0,0,106,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2898;
+                        var Y = 2724;
+                        var A = [0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 249;
+                        var Y = 2750;
+                        var A = [0,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2750;
+                        var A = [0,0,210,0,0,0,0,1,1,0,1,0,0,1,0,0,0,0,0,0,0,157,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2321;
+                        var Y = 2750;
+                        var A = [0,0,0,0,0,0,1,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2898;
+                        var Y = 2750;
+                        var A = [0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,53,0,0,0,0,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 222;
+                        var Y = 2776;
+                        var A = [0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2776;
+                        var A = [0,289,0,0,0,0,0,1,1,0,1,0,0,1,0,0,261,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2321;
+                        var Y = 2776;
+                        var A = [0,0,0,0,0,0,1,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2923;
+                        var Y = 2776;
+                        var A = [0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,133,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 249;
+                        var Y = 2802;
+                        var A = [0,1,0,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2802;
+                        var A = [0,289,0,0,0,0,0,1,1,0,1,0,0,1,0,365,0,0,0,0,0,0,0,1,0,1,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 2802;
+                        var A = [0,0,0,0,0,1,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2923;
+                        var Y = 2802;
+                        var A = [0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 274;
+                        var Y = 2827;
+                        var A = [0,1,0,0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 590;
+                        var Y = 2827;
+                        var A = [341,0,0,0,0,0,0,1,1,0,1,0,0,445,1,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2322;
+                        var Y = 2827;
+                        var A = [0,0,0,0,0,0,1,0,1,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2923;
+                        var Y = 2827;
+                        var A = [0,0,0,211,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327
+                        var Y = 2853;
+                        var A = [0,1,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1009;
+                        var Y = 2853;
+                        var A = [0,0,0,80,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2347;
+                        var Y = 2853;
+                        var A = [0,0,0,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 327
+                        var Y = 2877;
+                        var A = [0,1,0,0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 1035;
+                        var Y = 2877;
+                        var A = [0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        var X = 2400;
+                        var Y = 2877;
+                        var A = [0,0,0,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        //----
+
+                        var X = 380
+                        var Y = 2902;
+                        var A = [79,0,0]
+
+                        validCoords.push(drawBox(X,Y,A));
+
+                        // console.log({validCoords: validCoords})
+
+                        for(var x=0; x<validCoords.length; x++) {
+                            for(var y=0; y<validCoords[x].length; y++) {
+                                mapCoords.push(validCoords[x][y]);
+                            }
+                        }
+
+                        console.log({mapCoords: JSON.stringify(mapCoords)})
+
+                        var dataURL = c.toDataURL('image/jpeg', 0.5);
+
+                        jQuery.ajax({
+                            type: "POST",
+                            //contentType: "application/json; charset=utf-8",
+                            url: '/api',
+                            //dataType: "json",
+                            data: {mapCoords: mapCoords, dataURL:dataURL},
+                            success: function (result) {
+                                console.log(result);
+                            },
+                            beforeSend: function () {
+                            },
+                            error: function (Result) {
+                            alert("Error");
+                            }
+                        });
+                    };
+
+                    img1.src = '/images/land.jpg';
+
+                    document.querySelector('.container-fluid').appendChild(c);
+                }
+            });
+
+        </script>
+    </body>
+</html>

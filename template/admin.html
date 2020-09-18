@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="assets/css/basic.min.css" />
+        <link rel="stylesheet" href="assets/css/ribbon.css" />
+        <style>
+            body {
+                background-color: #dadada;
+            }
+            #drophere {
+                height: 100px;
+                overflow: auto;
+                border-style: dashed;
+            }
+            .navbar {
+                margin-bottom: 50px;
+            }
+            .white {
+                background-color: #ffffff;
+            }
+            #currentData_wrapper {
+                padding: 10px;
+                margin-bottom: 50px;
+            }
+            #fileName {
+                color: #007bff;
+                cursor: pointer;
+            }
+            #currentData td span:hover {
+                text-decoration: underline;
+            }
+            #map {
+                display: block;
+                width: 100%;
+                /* height: 500px; */
+                height: 80vh;
+                border: 1px solid #6c9436;
+            }
+            .text-overlay {
+                display: none;
+                position: absolute;
+                left: 50px;
+                top: 50px;
+                width: 4096px;
+                /*height: 500px;*/
+                font-size: 100px;
+                font-family: sans-serif;
+                color: white;
+                text-shadow: 30px 30px 15px rgba(0, 0, 0, 0.5);
+                border: 1px solid #f00;
+            }
+
+            .text-overlay a {
+                color: #ddf;
+            }
+        </style>
+
+        <title>Grid Map</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Grid Map</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+
+        <div id="map"></div>
+
+        <div class="text-overlay">
+            <h1>Hello!</h1>
+            <p>
+                Lorem ipsum
+                <a href="https://openseadragon.github.io" target="_blank"
+                    >dolor sit amet</a
+                >, consectetur adipiscing elit. Mauris faucibus nec ex et
+                feugiat. Vestibulum ante ipsum primis in faucibus orci luctus et
+                ultrices posuere cubilia curae; Nulla ut dignissim nisl.
+            </p>
+            <p>
+                Nam aliquam sem ut est hendrerit, a lobortis risus maximus. Nam
+                tortor magna, tristique id sem a, faucibus tincidunt sem. Nulla
+                hendrerit tortor at semper convallis. Vestibulum ante ipsum
+                primis in faucibus orci luctus et ultrices posuere cubilia
+                curae.
+            </p>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="assets/js/jquery-2.2.4.min.js"></script>
+        <script src="assets/js/jquery.dataTables.min.js"></script>
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/moment.min.js"></script>
+        <script src="/utils.js"></script>
+        <script src="assets/js/openseadragon.min.js"></script>
+        <script src="assets/js/OpenSeadragonHTMLelements.js"></script>
+        <script src="assets/js/openseadragon-html-overlay.js"></script>
+        <script src="assets/js/openseadragon-canvas-overlay.js"></script>
+        <script>
+            var viewer
+            var allCoords
+            var markedCoords = []
+
+            var Utils
+
+            Utils = function (viewer) {
+                var self = this
+                self.viewer = viewer
+            }
+
+            Utils.prototype.overlay = function (top, left) {
+                var self = this
+
+                self.overlay = self.viewer.canvasOverlay({
+                    onRedraw: function () {
+                        console.log({ onRedraw: { left: left, top: top } })
+                        self.overlay.context2d().fillStyle = "red"
+                        self.overlay.context2d().fillRect(left, top, 23, 23)
+                    },
+                })
+            }
+
+            jQuery.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "/coords.json",
+                dataType: "json",
+                success: function (result) {
+                    if (result && result.length) {
+                        // console.log('CoordsLength : ---------', { CoordsLength: result.length })
+                        allCoords = result
+                    }
+                },
+                beforeSend: function () {},
+                error: function (Result) {
+                    alert("Error")
+                },
+            })
+            
+            jQuery(document).ready(function () {
+                ;(function () {
+                    var hEl
+                    var overlay
+
+                    viewer = OpenSeadragon({
+                        id: "map",
+                        prefixUrl: "/assets/images/",
+                        tileSources: [
+                            {
+                                tileSource: "/tiles/output.dzi",
+                                width: 4096,
+                            },
+                        ],
+                        //tileSources: "/tiles/output.dzi",
+                        showRotationControl: false,
+                        showFlipControl: false,
+                        gestureSettingsMouse: {
+                            clickToZoom: false,
+                        },
+                    })
+
+                    var overlay = viewer.canvasOverlay({
+                        onRedraw: function () {
+                            // console.log({markedCoords: markedCoords});
+
+                            if (markedCoords && markedCoords.length) {
+                                for (var x in markedCoords) {
+                                    // console.log('onRedraw : ', {x:markedCoords[x]})
+                                    overlay.context2d().fillStyle = "red"
+                                    overlay
+                                        .context2d()
+                                        .fillRect(
+                                            markedCoords[x][1],
+                                            markedCoords[x][0],
+                                            23,
+                                            23
+                                        )
+                                }
+                            }
+                        },
+                    })
+
+                    //jQuery(window).resize(function() {
+                    //  overlay.resize();
+                    //});
+
+                    viewer.addHandler("canvas-double-click", function (event) {
+                        var viewportPoint = viewer.viewport.pointFromPixel(
+                            event.position
+                        )
+
+                        // console.log({click: event, viewportPoint:viewportPoint, top:viewportPoint.y, left:viewportPoint.x});
+
+                        if (allCoords && allCoords.length) {
+                            var top = viewportPoint.y
+                            var left = viewportPoint.x
+
+                            for (var x = 0; x < allCoords.length; x++) {
+                                if (
+                                    top >= allCoords[x][0] &&
+                                    top <= allCoords[x][2] &&
+                                    left >= allCoords[x][1] &&
+                                    left <= allCoords[x][3]
+                                ) {
+                                    //console.log(allCoords[x]);
+
+                                    // markedCoords[x] = allCoords[x]
+
+                                    //overlay.resize();
+                                    // viewer.forceRedraw()
+
+                                    if (socks) {
+                                        // console.log("Socks : ------------ ", socks, socks.uuid4(), x, allCoords[x])
+                                        socks.Send({
+                                            id: socks.uuid4(),
+                                            index: x,
+                                            coords: allCoords[x],
+                                        })
+                                    }
+
+                                    //var o = new Utils(viewer);
+
+                                    //o.overlay(allCoords[x][0],allCoords[x][1]);
+                                }
+                            }
+                            //console.log('hello');
+                        }
+                    })
+                })()
+            })
+        </script>
+    </body>
+</html>
