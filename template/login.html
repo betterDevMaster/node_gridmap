@@ -1,70 +1,107 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #dadada;
-        }
-        #login .container {
-            background-color: #ffffff;
-            margin-top: 100px;
-        }
-        #login-row {
-            border:1px dashed #888888;
-            padding: 20px;
-        }
-        .navbar {
-            margin-bottom: 50px;
-        }
-    </style>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+        <style>
+            body {
+                background-color: #dadada;
+            }
+            #login .container {
+                background-color: #ffffff;
+                margin-top: 100px;
+            }
+            #login-row {
+                border: 1px dashed #888888;
+                padding: 20px;
+            }
+            .navbar {
+                margin-bottom: 50px;
+            }
+        </style>
 
-    <title>Login</title>
-  </head>
-  <body>
-
-    <div id="login">
-        <div class="container">
-            <div id="login-row" class="row justify-content-center align-items-center">
-                <div id="login-column" class="col-md-6">
-                    <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="/login" method="post">
-                            <h3 class="text-center text-info">Login</h3>
-                            <div class="form-group">
-                                <label for="username" class="text-info">Username:</label><br>
-                                <input type="text" name="username" id="username" class="form-control">
-                            </div>
-                            <div class="form-group">
+        <title>Login</title>
+    </head>
+    <body>
+        <div id="login">
+            <div class="container">
+                <div
+                    id="login-row"
+                    class="row justify-content-center align-items-center"
+                >
+                    <div id="login-column" class="col-md-6">
+                        <div id="login-box" class="col-md-12">
+                            <form
+                                id="login-form"
+                                class="form"
+                                action="/admin"
+                                method="post"
+                            >
+                                <h3 class="text-center text-info">Login</h3>
+                                <div class="form-group">
+                                    <label for="username" class="text-info"
+                                        >Username:</label
+                                    ><br />
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        id="username"
+                                        class="form-control"
+                                        autocomplete="on"
+                                    />
+                                </div>
+                                <!-- <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
-                            </div>
-                        </form>
+                            </div> -->
+                                <div class="form-group">
+                                    <input
+                                        type="button"
+                                        name="submit"
+                                        id="submit"
+                                        class="btn btn-info btn-md"
+                                        value="submit"
+                                    />
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="assets/js/jquery-2.2.4.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script>
-
-        jQuery(document).ready(function() {
-
-
-        });
-
-    </script>
-  </body>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="assets/js/jquery-2.2.4.min.js"></script>
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script>
+            jQuery(document).ready(function () {
+                var request
+                $("#submit").click(function () {
+                    //You can either link directly to a func here
+                    // window.location.href = './admin'
+                    localStorage.setItem("userName", $('#username').val())
+                    $.ajax({
+                        type: 'POST',
+                        url: '/mylogin',
+                        data: {"userName" : $('#username').val()},
+                        success: function (result) { 
+                            if (result)
+                                window.location.href = './admin'
+                            else 
+                                alert('Your name does not match with the rules.')
+                        }
+                    });
+                })
+            })
+        </script>
+    </body>
 </html>

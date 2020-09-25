@@ -23,6 +23,14 @@
             }
             .navbar {
                 margin-bottom: 50px;
+                /* position: relative; */
+            }
+            .navbar span {
+                position: absolute;
+                right: 20px;
+            }
+            .navbar button {
+                /* position: absolute; */
             }
             .white {
                 background-color: #ffffff;
@@ -80,6 +88,15 @@
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <button
+                type="button"
+                class="btn btn-info"
+                data-toggle="modal"
+                data-target="#finishModal"
+            >
+                Finish
+            </button>
+            <span id="username">username</span>
         </nav>
 
         <div id="map"></div>
@@ -103,6 +120,104 @@
             </p>
         </div>
 
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="finishModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="finishModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="finishModalLabel">
+                            Transaction
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>
+                            Your land pack costs <span id="landpack"></span> <br>
+
+                            You have 30 minutes to complete your order. If no payment has been made your land will go back on sale and address blacklisted. <br>
+
+                            For VET, please send <span id="vet"></span>. <br>
+
+                            For USDT please send <span id="usdt"></span>. <br>
+
+                            For Eth please send <span id="eth"></span>. <br>
+
+                            For PayPal please enter your email address in Transaction ID. <br>
+
+                            You will receive your land NFTs within 4 days to your associated VET address. <br>
+                        </h6>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                    >Transaction ID</span
+                                >
+                            </div>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="transactionid"
+                                autocomplete="on"
+                            />
+                        </div>
+                        <div class="input-group" style="margin-top: 15px">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                    >Confirm wallet address</span
+                                >
+                            </div>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="walletaddr"
+                                autocomplete="on"
+                            />
+                        </div>
+                        <div class="input-group" style="margin-top: 15px">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Total Cost</span>
+                            </div>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="totalcost"
+                                disabled
+                            />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="saveChange"
+                        >
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="assets/js/jquery-2.2.4.min.js"></script>
@@ -119,25 +234,36 @@
             var viewer
             var allCoords
             var markedCoords = []
-
+            var _markedCoords = []
+            var _myCoords = []
+            var _mySquareCount = 0
             var Utils
+            var overlay
 
             Utils = function (viewer) {
                 var self = this
                 self.viewer = viewer
             }
 
-            Utils.prototype.overlay = function (top, left) {
-                var self = this
+            var today = new Date().toLocaleDateString(undefined, {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            })
+            // Utils.prototype.overlay = function (top, left) {
+            //     var self = this
 
-                self.overlay = self.viewer.canvasOverlay({
-                    onRedraw: function () {
-                        console.log({ onRedraw: { left: left, top: top } })
-                        self.overlay.context2d().fillStyle = "red"
-                        self.overlay.context2d().fillRect(left, top, 23, 23)
-                    },
-                })
-            }
+            //     self.overlay = self.viewer.canvasOverlay({
+            //         onRedraw: function () {
+            //             // console.log({ onRedraw: { left: left, top: top } })
+            //             self.overlay.context2d().fillStyle = "blue"
+            //             self.overlay.context2d().fillRect(left, top, 23, 23)
+            //         },
+            //     })
+            // }
 
             jQuery.ajax({
                 type: "GET",
@@ -146,7 +272,6 @@
                 dataType: "json",
                 success: function (result) {
                     if (result && result.length) {
-                        // console.log('CoordsLength : ---------', { CoordsLength: result.length })
                         allCoords = result
                     }
                 },
@@ -155,11 +280,41 @@
                     alert("Error")
                 },
             })
-            
+
             jQuery(document).ready(function () {
                 ;(function () {
+                    // console.log('localStorage.getItem("userName") : ', localStorage.getItem("userName"))
+                    if (!localStorage.getItem("userName") || localStorage.getItem("userName") === '')
+                        window.location.href = '/'
+
+                    $("#username").text(localStorage.getItem("userName"))
+
+                    $("#saveChange").click(function () {
+                        const ret = hasStringAndNumber(
+                            $("#transactionid").val()
+                        )
+
+                        //You can either link directly to a func here
+                        if (ret) {
+                            socks.Send({
+                                mail: true,
+                                userName: localStorage.getItem("userName"),
+                                transactionId: $("#transactionid").val(),
+                                walletaddr: $("#walletaddr").val(),
+                                today: today,
+                                coords: _myCoords,
+                            })
+                            $("#finishModal").modal("toggle")
+                            // $('#transactionid').val('');
+                            // $('#walletaddr').val('');
+                        } else {
+                            alert(
+                                "Please input letters and numbers in Transaction ID."
+                            )
+                        }
+                    })
+
                     var hEl
-                    var overlay
 
                     viewer = OpenSeadragon({
                         id: "map",
@@ -178,19 +333,32 @@
                         },
                     })
 
-                    var overlay = viewer.canvasOverlay({
+                    overlay = viewer.canvasOverlay({
                         onRedraw: function () {
-                            // console.log({markedCoords: markedCoords});
-
+                            // Other users coords
                             if (markedCoords && markedCoords.length) {
                                 for (var x in markedCoords) {
-                                    // console.log('onRedraw : ', {x:markedCoords[x]})
                                     overlay.context2d().fillStyle = "red"
                                     overlay
                                         .context2d()
                                         .fillRect(
                                             markedCoords[x][1],
                                             markedCoords[x][0],
+                                            23,
+                                            23
+                                        )
+                                }
+                            }
+
+                            // My coords
+                            if (_markedCoords && _markedCoords.length) {
+                                for (var y in _markedCoords) {
+                                    overlay.context2d().fillStyle = "blue"
+                                    overlay
+                                        .context2d()
+                                        .fillRect(
+                                            _markedCoords[y][1],
+                                            _markedCoords[y][0],
                                             23,
                                             23
                                         )
@@ -204,12 +372,16 @@
                     //});
 
                     viewer.addHandler("canvas-double-click", function (event) {
+                        if (_mySquareCount >= 20) {
+                            alert('A user can only select 20 squares.')
+                            return;
+                        }
+                        
                         var viewportPoint = viewer.viewport.pointFromPixel(
                             event.position
                         )
 
                         // console.log({click: event, viewportPoint:viewportPoint, top:viewportPoint.y, left:viewportPoint.x});
-
                         if (allCoords && allCoords.length) {
                             var top = viewportPoint.y
                             var left = viewportPoint.x
@@ -221,15 +393,11 @@
                                     left >= allCoords[x][1] &&
                                     left <= allCoords[x][3]
                                 ) {
-                                    //console.log(allCoords[x]);
-
                                     // markedCoords[x] = allCoords[x]
-
-                                    //overlay.resize();
+                                    // overlay.resize();
                                     // viewer.forceRedraw()
 
                                     if (socks) {
-                                        // console.log("Socks : ------------ ", socks, socks.uuid4(), x, allCoords[x])
                                         socks.Send({
                                             id: socks.uuid4(),
                                             index: x,
@@ -242,11 +410,16 @@
                                     //o.overlay(allCoords[x][0],allCoords[x][1]);
                                 }
                             }
-                            //console.log('hello');
                         }
                     })
                 })()
             })
+
+            function hasStringAndNumber(myString) {
+                return /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(
+                    myString
+                )
+            }
         </script>
     </body>
 </html>

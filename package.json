@@ -1,14 +1,19 @@
 {
   "name": "gridmap",
   "version": "1.0.0",
-  "description": "",
+  "description": "gridmap using node",
   "main": "gridmap.js",
   "scripts": {
+    "start": "node gridmap.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "12.17.x"
+  },
   "author": "Sherwin Terunez",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
+    "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-ensure-login": "^0.1.1",
@@ -16,13 +21,35 @@
     "express-fileupload": "^1.2.0",
     "express-session": "^1.17.1",
     "forever": "^3.0.2",
+    "json2xls": "^0.1.2",
     "leaflet": "^1.7.1",
     "moment": "^2.27.0",
+    "mysql": "^2.18.1",
+    "node-xlsx": "^0.15.0",
+    "nodemailer": "^6.4.11",
     "open": "^7.2.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "sharp": "^0.26.0",
     "uuid4": "^2.0.2",
-    "websocket": "^1.0.32"
-  }
+    "websocket": "^1.0.32",
+    "xlsx": "^0.16.7"
+  },
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seniorDevMaster/node_gridmap.git"
+  },
+  "keywords": [
+    "node",
+    "gridmap"
+  ],
+  "bugs": {
+    "url": "https://github.com/seniorDevMaster/node_gridmap/issues"
+  },
+  "homepage": "https://github.com/seniorDevMaster/node_gridmap#readme"
 }
