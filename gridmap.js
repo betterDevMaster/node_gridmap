@@ -13,7 +13,6 @@ const express_session = require("express-session")
 const WebSocketServer = require("websocket").server
 //const expressip = require('express-ip');
 const uuid4 = require("uuid4")
-const XLSX = require("xlsx")
 const json2xls = require("json2xls")
 const open = require("open")
 
@@ -21,12 +20,14 @@ const Mysql = require('./controller/db')
 const sendEmail = require("./controller/email.send")
 const templates = require("./controller/email.templates")
 
-const { _MyCoords } = require('./controller/global')
+const { _MyCoords, _UserNameList, _DefaultLinksList, _FianlList } = require('./controller/global')
+
+const { default: _default } = require("node-xlsx")
 
 /*
 npm i express compression body-parser express-fileupload sharp moment passport passport-local connect-ensure-login express-session uuid4 open
 */
-// Server Test
+
 var mapConnections = []
 
 const DEFAULT_PATH = process.cwd()
@@ -52,18 +53,10 @@ const appRouter = express.Router()
 
 const appServer = http.createServer(webServer)
 
-// const sockServer = http.createServer()
-
-// // Database Management
-// Mysql.init()
-
 // Handle MainPart
 ;(async function main() {
-    // const coordsName = DEFAULT_PATH + "/docs/coords.xlsx"
-    // var myCoords = checkExcelFile(coordsName)
-
     // Database Management
-    Mysql.init()
+    await Mysql.init(DEFAULT_PATH)
 
     passport.use(
         new passport_local.Strategy(function (username, password, done) {
@@ -114,17 +107,24 @@ const appServer = http.createServer(webServer)
         })
     )
 
-    appRouter.post("/mylogin", function (req, res) {
-        var includeFound = false
-        var data = []
-        // Mysql.hadnleConnectionClose();
-        // Mysql.init();
-        const fileName = DEFAULT_PATH + "/docs/username.xlsx"
-        data = checkExcelFile(fileName)
-        includeFound = data.some(
-            (el) => el["Please enter your node address"].toLowerCase() === req.body.userName.toLowerCase()
-        )
-        res.send(includeFound)
+    appRouter.post("/mylogin", async function (req, res) {
+        let user = await _UserNameList.list.filter(function (u) {
+            return u["userName"].toLowerCase() == req.body.userName.toLowerCase()
+        })[0]
+        if (!user) {
+            user = [{'Please enter your node address' : req.body.userName, 'Discount' : 0, 'userType' : 2}]
+            await Mysql.saveUserNameList(user)
+            user = { 'userName': req.body.userName, 'discount': 100, 'userType': 2 }
+        }
+
+        let link = await _DefaultLinksList.list.filter(function (l) {
+            return l["userType"] == user['userType']
+        })[0]
+
+        if (user)
+            res.send({ user: user, link: link, final: _FianlList.list })
+        else
+            res.send(null)
     })
 
     appRouter.get("/logout", function (req, res) {
@@ -426,14 +426,12 @@ const appServer = http.createServer(webServer)
 
                 // Check the gmail account
                 if (obj.hasOwnProperty("mail")) {
-                    // console.log('obj: ---- ', obj)
-                    Mysql.saveFinalData(obj)
+                    Mysql.saveCoords(obj)
                     transEmail = await sendEmail(
                         "VeriArtiofficial@gmail.com",
                         templates.confirm(obj)
                     )
                 }
-                // console.log('obj : ------------ ', obj)
 
                 // Insert the coords user select
                 if (obj.hasOwnProperty("id")) {
@@ -443,23 +441,10 @@ const appServer = http.createServer(webServer)
                             (el) => el.index === obj.index
                         )
                     }
-                    // console.log('coordsFound : ------------- ', coordsFound, obj)
                     if (!coordsFound) {
-                        Mysql.saveCoords(obj)
                         _MyCoords.coord.push({ index: obj.index, coords: obj.coords, userName: obj.userName });
-                        // _MyCoords.coord = obj.coords
                     }
                 }
-
-                // self.sendUTF(
-                //     JSON.stringify({
-                //         id: obj.id,
-                //         success: true,
-                //         timestamp: moment().format("x"),
-                //         myCoords: _MyCoords,
-                //         transEmail: transEmail,
-                //     })
-                // )
 
                 setTimeout(() => {
                     for (var x in mapConnections) {
@@ -484,54 +469,11 @@ const appServer = http.createServer(webServer)
 
             console.log("Connection closed.")
 
+            Mysql.migration()
+
             delete mapConnections[myConId]
         })
     })
-
-    function checkExcelFile(fileName) {
-        var workbook
-        try {
-            workbook = XLSX.readFile(fileName)
-        } catch (err) {
-            console.log(err)
-            return [];
-        }
-        var sheet_name_list = workbook.SheetNames
-        var data = []
-
-        sheet_name_list.forEach(function (y) {
-            var worksheet = workbook.Sheets[y]
-            var headers = {}
-            for (z in worksheet) {
-                if (z[0] === "!") continue
-                //parse out the column, row, and value
-                var tt = 0
-                for (var i = 0; i < z.length; i++) {
-                    if (!isNaN(z[i])) {
-                        tt = i
-                        break
-                    }
-                }
-                var col = z.substring(0, tt)
-                var row = parseInt(z.substring(tt))
-                var value = worksheet[z].v
-
-                //store header names
-                if (row == 1 && value) {
-                    headers[col] = value
-                    continue
-                }
-
-                if (!data[row]) data[row] = {}
-                data[row][headers[col]] = value
-            }
-            //drop those first two rows which are empty
-            data.shift()
-            data.shift()
-        })
-
-        return data
-    }
 
     function writeCoordsToExcel(coords) {
         const filename = DEFAULT_PATH + "/docs/coords.xlsx";

@@ -10,6 +10,11 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+        />
         <style>
             body {
                 background-color: #dadada;
@@ -44,7 +49,12 @@
                                 action="/admin"
                                 method="post"
                             >
-                                <h3 class="text-center text-info">Login</h3>
+                                <div style="text-align: center">
+                                    <img src="images/logo.JPG" alt="Gridmap" />
+                                </div>
+                                <h3 class="text-center text-info">
+                                    Registered wallet
+                                </h3>
                                 <div class="form-group">
                                     <label for="username" class="text-info"
                                         >Username:</label
@@ -54,6 +64,7 @@
                                         name="username"
                                         id="username"
                                         class="form-control"
+                                        maxlength="50"
                                         autocomplete="on"
                                     />
                                 </div>
@@ -82,24 +93,97 @@
         <script src="assets/js/jquery-2.2.4.min.js"></script>
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/toastify-js"
+        ></script>
         <script>
             jQuery(document).ready(function () {
                 var request
                 $("#submit").click(function () {
                     //You can either link directly to a func here
                     // window.location.href = './admin'
-                    localStorage.setItem("userName", $('#username').val())
                     $.ajax({
-                        type: 'POST',
-                        url: '/mylogin',
-                        data: {"userName" : $('#username').val()},
-                        success: function (result) { 
-                            if (result)
-                                window.location.href = './admin'
-                            else 
-                                alert('Your name does not match with the rules.')
-                        }
-                    });
+                        type: "POST",
+                        url: "/mylogin",
+                        data: { userName: $("#username").val() },
+                        success: function (result) {
+                            console.log('result : -------------- ', result)
+                            if (result) {
+                                localStorage.setItem(
+                                    "userName",
+                                    $("#username").val()
+                                )
+                                localStorage.setItem(
+                                    "discount",
+                                    result.user.discount
+                                )
+                                localStorage.setItem(
+                                    "packcost",
+                                    result.final[0].packcost
+                                )
+                                localStorage.setItem(
+                                    "desc1",
+                                    result.final[0].desc1
+                                )
+                                localStorage.setItem(
+                                    "vetDesc",
+                                    result.final[0].vetDesc
+                                )
+                                localStorage.setItem(
+                                    "vetRate",
+                                    result.final[0].vetRate
+                                )
+                                localStorage.setItem(
+                                    "usdtDesc",
+                                    result.final[0].usdtDesc
+                                )
+                                localStorage.setItem(
+                                    "usdtRate",
+                                    result.final[0].usdtRate
+                                )
+                                localStorage.setItem(
+                                    "ethDesc",
+                                    result.final[0].ethDesc
+                                )
+                                localStorage.setItem(
+                                    "ethRate",
+                                    result.final[0].ethRate
+                                )
+                                localStorage.setItem(
+                                    "desc2",
+                                    result.final[0].desc2
+                                )
+                                localStorage.setItem(
+                                    "address1",
+                                    result.final[0].hasOwnProperty('address1') ? result.final[0].address1 : 'John Smith'
+                                )
+                                localStorage.setItem(
+                                    "address2",
+                                    result.final[0].hasOwnProperty('address2') ? result.final[0].address2 : 'James Bridon'
+                                )
+                                localStorage.setItem(
+                                    "address3",
+                                    result.final[0].hasOwnProperty('address3') ? result.final[0].address3 : 'Max halton'
+                                )
+                                if (result.link.allow === 1)
+                                    window.location.href = "./admin"
+                                if (result.link.allow === 2) {
+                                    Toastify({
+                                        text: "Administrator will allow the map soon for this user.",
+                                        duration: 5000,
+                                        newWindow: true,
+                                        close: true,
+                                        gravity: "top", // `top` or `bottom`
+                                        position: "right", // `left`, `center` or `right`
+                                        backgroundColor: "#e74c3c",
+                                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                                        onClick: function () {}, // Callback after click
+                                    }).showToast()
+                                }
+                            }
+                        },
+                    })
                 })
             })
         </script>

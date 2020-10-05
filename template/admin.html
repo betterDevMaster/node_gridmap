@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/basic.min.css" />
         <link rel="stylesheet" href="assets/css/ribbon.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+        />
+
         <style>
             body {
                 background-color: #dadada;
@@ -146,19 +152,24 @@
                     </div>
                     <div class="modal-body">
                         <h6>
-                            Your land pack costs <span id="landpack"></span> <br>
+                            <span id="packcost"></span>
+                            <span id="landpack"></span> <br />
 
-                            You have 30 minutes to complete your order. If no payment has been made your land will go back on sale and address blacklisted. <br>
+                            <span id="desc1"></span> <br />
 
-                            For VET, please send <span id="vet"></span>. <br>
+                            <div style="border-bottom: 1px solid;">
+                            <span id="vetDesc"></span> <span id="vet"></span> to <span id="address1"></span>.
+                            <br />
+                            <img src="images/vet.PNG" alt="Vet" style="width: 30%;" />
+                            </div>
 
-                            For USDT please send <span id="usdt"></span>. <br>
+                            <span id="usdtDesc"></span> <span id="usdt"></span> to <span id="address2"></span>.
+                            <br />
 
-                            For Eth please send <span id="eth"></span>. <br>
+                            <span id="ethDesc"></span> <span id="eth"></span> to <span id="address3"></span>.
+                            <br />
 
-                            For PayPal please enter your email address in Transaction ID. <br>
-
-                            You will receive your land NFTs within 4 days to your associated VET address. <br>
+                            <span id="desc2"></span> <br />
                         </h6>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -176,7 +187,7 @@
                         <div class="input-group" style="margin-top: 15px">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"
-                                    >Confirm wallet address</span
+                                    >Registered wallet address</span
                                 >
                             </div>
                             <input
@@ -230,11 +241,17 @@
         <script src="assets/js/OpenSeadragonHTMLelements.js"></script>
         <script src="assets/js/openseadragon-html-overlay.js"></script>
         <script src="assets/js/openseadragon-canvas-overlay.js"></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/toastify-js"
+        ></script>
+
         <script>
             var viewer
             var allCoords
             var markedCoords = []
             var _markedCoords = []
+            var _myCoordsIndex = []
             var _myCoords = []
             var _mySquareCount = 0
             var Utils
@@ -284,18 +301,35 @@
             jQuery(document).ready(function () {
                 ;(function () {
                     // console.log('localStorage.getItem("userName") : ', localStorage.getItem("userName"))
-                    if (!localStorage.getItem("userName") || localStorage.getItem("userName") === '')
-                        window.location.href = '/'
+                    if (
+                        !localStorage.getItem("userName") ||
+                        localStorage.getItem("userName") === ""
+                    )
+                        window.location.href = "/"
 
                     $("#username").text(localStorage.getItem("userName"))
+                    $("#packcost").text(localStorage.getItem("packcost"))
+                    $("#desc1").text(localStorage.getItem("desc1"))
+                    $("#vetDesc").text(localStorage.getItem("vetDesc"))
+                    $("#usdtDesc").text(localStorage.getItem("usdtDesc"))
+                    $("#ethDesc").text(localStorage.getItem("ethDesc"))
+                    $("#desc2").text(localStorage.getItem("desc2"))
+                    $("#address1").text(localStorage.getItem("address1"))
+                    $("#address2").text(localStorage.getItem("address2"))
+                    $("#address3").text(localStorage.getItem("address3"))
 
                     $("#saveChange").click(function () {
-                        const ret = hasStringAndNumber(
-                            $("#transactionid").val()
-                        )
+                        // const ret = hasStringAndNumber($("#transactionid").val()) && $("#walletaddr").val() !== ''
+                        const ret = $("#transactionid").val() !== '' && $("#walletaddr").val() !== ''
 
                         //You can either link directly to a func here
                         if (ret) {
+                            console.log(
+                                "_markedCoords : ",
+                                _markedCoords,
+                                _myCoordsIndex,
+                                _myCoords
+                            )
                             socks.Send({
                                 mail: true,
                                 userName: localStorage.getItem("userName"),
@@ -303,14 +337,34 @@
                                 walletaddr: $("#walletaddr").val(),
                                 today: today,
                                 coords: _myCoords,
+                                indexs: _myCoordsIndex,
                             })
                             $("#finishModal").modal("toggle")
-                            // $('#transactionid').val('');
-                            // $('#walletaddr').val('');
+                            Toastify({
+                                text: "Success in your transaction.",
+                                duration: 5000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                backgroundColor:
+                                    "#07bc0c",
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                onClick: function () {}, // Callback after click
+                            }).showToast()
                         } else {
-                            alert(
-                                "Please input letters and numbers in Transaction ID."
-                            )
+                            Toastify({
+                                text: "Please input letters and numbers in Transaction ID.",
+                                duration: 5000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                backgroundColor:
+                                    "#e74c3c",
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                onClick: function () {}, // Callback after click
+                            }).showToast()
                         }
                     })
 
@@ -373,10 +427,21 @@
 
                     viewer.addHandler("canvas-double-click", function (event) {
                         if (_mySquareCount >= 20) {
-                            alert('A user can only select 20 squares.')
-                            return;
+                            Toastify({
+                                text: "A user can only select 20 squares.",
+                                duration: 5000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                backgroundColor:
+                                    "#e74c3c",
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                onClick: function () {}, // Callback after click
+                            }).showToast()
+                            return
                         }
-                        
+
                         var viewportPoint = viewer.viewport.pointFromPixel(
                             event.position
                         )
